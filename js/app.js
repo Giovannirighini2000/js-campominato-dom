@@ -4,6 +4,10 @@
 const btn = document.getElementById("mybuttonplay")
 // COLLEGO IL VALARE CHE INSERISCE L'UTENTE NEL CALCOLARE LA GRIGLIA
 const inputLatoGriglia = document.getElementById("input-lato-griglia")
+// CONTEGGIO PUNTI CASELLE BLU CLICK
+const punteggiolivelloAttuale = document.getElementById("ilmioconteggiopunti")
+
+
 // QUANDO L'UTENTE FARE UN CLICK SI CE EVENT LISTENER CON UN FUNZIONE CHE A OGNI CLICK CREA UNA NUOVO GIOCO
 btn.addEventListener("click", function () {
     // CALCOLO LE CELLE DELLE GRIGLIA 
@@ -63,10 +67,11 @@ btn.addEventListener("click", function () {
 
         }
     }
-    
+
     // CON UNA FUNZIONE
     // CREO UN CICLO FOR CHE AL CLICK MI DICE IL NUMERO DELLA CASELLA E MI IMPOSTA IL COLORE 
     // DISPONGO LE BOMBE ROSSE CHE AL CLICK DOVRANNO FINIRE IL GIOCO E LE CASELLE BLU SONO I PUNTI CHE AL CLICK DOVRANNO AUMENTARE IL CONTEGGIO E ALLA FINE DELLE CASELLE BLU A DISPOSIZIONE DOVRA FINIRE IL GAME
+    
     function generazioneBombePunti(bombePunti) {
         for (let i = 0; i < celleTotali.length; i++) {
             const cella = celleTotali[i]
@@ -81,16 +86,19 @@ btn.addEventListener("click", function () {
                 } else {
                     cella.style.backgroundColor = "blue";
                     punteggio++
+                    cella.removeEventListener('click',arguments.callee)
+                    
                     if (punteggio === numeroCelle - 16) {
                         window.alert(`Hai vinto! Il tuo punteggio è ${punteggio} Punti`)
                         btn.click()
+                        
+                       
                     }
 
                 }
             })
         }
     }
-
-
-
+    
+    
 });
