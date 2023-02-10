@@ -76,21 +76,30 @@ btn.addEventListener("click", function () {
         for (let i = 0; i < celleTotali.length; i++) {
             const cella = celleTotali[i]
             let punteggio = 0
+            
             cella.addEventListener('click', function () {
                 console.log(i + 1)
                 if (bombeCasuali.includes(i + 1)) {
                     cella.style.backgroundColor = "red";
                     window.alert("Hai perso!");
                     btn.click()
+                    
+                    
 
                 } else {
                     cella.style.backgroundColor = "blue";
                     punteggio++
+                    // arguments.callee fa riferimento alla funzione anonima
                     cella.removeEventListener('click',arguments.callee)
+                    // STAMPO IL CONTEGGIO PUNTI CORREGGERE
+                    punteggiolivelloAttuale.innerHTML = punteggio
+                    
+                    
                     
                     if (punteggio === numeroCelle - 16) {
                         window.alert(`Hai vinto! Il tuo punteggio è ${punteggio} Punti`)
                         btn.click()
+                        
                         
                        
                     }
