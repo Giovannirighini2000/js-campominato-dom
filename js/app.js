@@ -6,11 +6,14 @@ const btn = document.getElementById("mybuttonplay")
 const inputLatoGriglia = document.getElementById("input-lato-griglia")
 // QUANDO L'UTENTE FARE UN CLICK SI CE EVENT LISTENER CON UN FUNZIONE 
 btn.addEventListener("click", function () {
-    // GENERO LE BOMBE CASUALI
+     // CALCOLO LE CELLE DELLE GRIGLIA 
+    let latoGriglia = inputLatoGriglia.value
+    let numeroCelle = latoGriglia * latoGriglia
+    // GENERO LE BOMBE CASUALI IN BASE ALLE CELLE
     let bombeCasuali=[]
      let bomba
      while(bombeCasuali.length<16){
-        bomba=Math.floor(Math.random()*100)
+        bomba=Math.floor(Math.random()*numeroCelle)+1
         console.log(bomba)
         
         if(bombeCasuali.includes(bomba)){
@@ -19,14 +22,10 @@ btn.addEventListener("click", function () {
             bombeCasuali.push(bomba)
             console.log(bombeCasuali)
 
-        }
-    
+        }   
      }
-     // CALCOLO LE CELLE DELLE GRIGLIA 
-    let latoGriglia = inputLatoGriglia.value
-    let numeroCelle = latoGriglia * latoGriglia
-    console.log(latoGriglia, numeroCelle)
-    console.log("IL BOTTONE FUNZIONA");
+    // console.log(latoGriglia, numeroCelle)
+    // console.log("IL BOTTONE FUNZIONA");
      
     // COLLEMENTO AL DOM
     const grigliaElement = document.querySelector('.griglia-caselle-di-gioco')
@@ -39,9 +38,9 @@ btn.addEventListener("click", function () {
     // CREO LE DIV CON UN CICLO FOR E USO APPEND PER METTERLI ALL'INZIO DELLA GRIGLIA
     for (let i = 0; i < numeroCelle; i++) {
         let num = i + 1
-	    console.log(num)
+	    // console.log(num)
         let cellaElement = document.createElement('div')
-        console.log(cellaElement)
+        // console.log(cellaElement)
         grigliaElement.append(cellaElement)
         cellaElement.classList.add("cella", "width");
         cellaElement.append(num)
@@ -55,7 +54,7 @@ btn.addEventListener("click", function () {
     // DISPONGO LE BOMBE ROSSE E LE CASELLE BLU SONO I PUNTI 
     for (let i = 0; i < celleTotali.length; i++) {
         const cella = celleTotali[i]
-        
+        let punteggio=0
         cella.addEventListener('click', function () {
             console.log(i + 1)
             if (bombeCasuali.includes(i + 1)) {
@@ -64,8 +63,15 @@ btn.addEventListener("click", function () {
                 btn.click()
                 
                 
+                
             } else {
                 cella.style.backgroundColor = "blue";
+                punteggio++
+                if(punteggio===numeroCelle-16){
+                    window.alert(`Hai vinto! Il tuo punteggio è ${punteggio} Punti`)
+                    btn.click()
+                }
+                
             }
         })
     }
